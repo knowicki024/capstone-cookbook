@@ -26,7 +26,7 @@ function Home() {
      <Route path="/users" element={<Users />} />
      <Route path="/" element={<RecipeCard recipes={recipes} />} />
      <Route path="/recipes/:id" element={<RecipeDetail API={API} />} />
-     <Route path="categories/:id/recipes" element={<Categories API={API} />} />
+     <Route path="categories/:id" element={<Categories API={API} />} />
    </Routes>
  );
 }
