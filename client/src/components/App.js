@@ -1,8 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+// src/App.js
+import React from 'react';
+import { Route, Routes } from "react-router-dom";
+import Home from './Home';
+import Header from './Header';
+
 
 function App() {
-  return <h1>Project Client</h1>;
+ return (
+   <div>
+     <Header />
+     <Routes>
+       <Route path="*" element={<Home />} />
+     </Routes>
+   </div>      
+ );
 }
+
 
 export default App;
