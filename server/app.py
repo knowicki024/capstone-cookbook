@@ -29,6 +29,17 @@ class Users(Resource):
             return make_response({'error': 'Failed to add a new user, try again'}, 400)
 
 
+class CategoriesById(Resource):
+    def get(self, id):
+        category = Category.query.get(id)
+        if category:
+            category_data = category.to_dict(rules=('-recipes.category',))
+            category_data['recipes'] = [recipe.to_dict() for recipe in category.recipes]
+            return make_response(category_data, 200)
+        else:
+            return make_response({'error': 'Category not found'}, 404)
+
+        
 class Categories(Resource):
     def get(self):
         categories = [category.to_dict(rules=('-recipes',)) for category in Category.query.all()]
@@ -44,7 +55,7 @@ class Categories(Resource):
             db.session.commit()
             return make_response(new_category.to_dict(rules=('-recipes',)), 201)
         except ValueError:
-            return make_response({'error': 'Failed to add new category'}, 404)
+            return make_response({'error': 'Failed to add new category'}, 400)
     
 
 class Recipes(Resource):
@@ -151,6 +162,7 @@ class MealPlanById(Resource):
 
 api.add_resource(Users, '/users')
 api.add_resource(Categories, '/categories')
+api.add_resource(CategoriesById, '/categories/<int:id>')
 api.add_resource(Recipes, '/recipes')
 api.add_resource(RecipeById, '/recipes/<int:id>')
 api.add_resource(MealPlans, '/meal_plans')  

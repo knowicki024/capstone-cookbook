@@ -1,50 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
 
+function Categories({API}){
+  const [categories, setCategories] = useState([]);
+  const [newCategory, setNewCategory] = useState('');
+  // Assuming API is defined somewhere globally or imported
 
-function Categories({ API }) {
- const [recipes, setRecipes] = useState([]);
- const [categoryName, setCategoryName] = useState('');
- const { id } = useParams();
+  useEffect(() => {
+    fetch(`${API}/categories`)
+      .then((response) => response.json())
+      .then(data => setCategories(data))
+      .catch(error => console.error('Error:', error));
+  }, [API]); 
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetch(`${API}/categories`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: newCategory }),
+    })
+    .then(response => response.json())
+    .then(category => {
+      setCategories([...categories, category]);
+      setNewCategory('');
+    })
+    .catch(error => console.error('Error adding category:', error));
+  };
 
- useEffect(() => {
-   fetch(`${API}/categories/${id}`)
-     .then(response => {
-       if (!response.ok) {
-         throw new Error('Network response was not ok');
-       }
-       return response.json();
-     })
-     .then(data => {
-       setRecipes(data.recipes);
-       setCategoryName(data.name);
-     })
-     .catch(error => {
-       console.error('Error fetching category recipes:', error);
-     });
- }, [API, id]);
-
-
- return (
-   <div>
-     <h2>Recipes in {categoryName}</h2>
-     {recipes.length > 0 ? (
-       <ul>
-         {recipes.map(recipe => (
-           <li key={recipe.id}>
-             <h3>{recipe.name}</h3>
-             <p>{recipe.ingredients}</p>
-             <p>{recipe.directions}</p>
-           </li>
-         ))}
-       </ul>
-     ) : (
-       <p>No recipes found in this category.</p>
-     )}
-   </div>
- );
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          New Category Name:
+          <input
+            type="text"
+            value={newCategory}
+            onChange={(e) => setNewCategory(e.target.value)}
+          />
+        </label>
+        <button type="submit">Add Category</button>
+      </form>
+      <ul>
+        {categories.map(category => <li key={category.id}>{category.name}</li>)}
+      </ul>
+    </div>
+  );
 }
-
 
 export default Categories;

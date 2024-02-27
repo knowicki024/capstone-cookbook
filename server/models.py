@@ -56,18 +56,18 @@ class Recipe(db.Model, SerializerMixin):
     serialize_rules = ('-meal_plans.recipe', '-category.recipes',)
 
 
-    @validates('name', 'ingredients', 'directions', 'category_id')
-    def validate_fields(self, key, value):
-        if not value:
-            raise ValueError(f"{key} cannot be empty")
+    # @validates('name', 'ingredients', 'directions', 'category_id')
+    # def validate_fields(self, key, value):
+    #     if not value:
+    #         raise ValueError(f"{key} cannot be empty")
         
-        if key == 'category_id':
-            if not isinstance(value, int):
-                raise ValueError("category_id must be an integer")
-            if not (1 <= value <= 3):
-                raise ValueError("category_id must be between 1 and 3")
+    #     if key == 'category_id':
+    #         if not isinstance(value, int):
+    #             raise ValueError("category_id must be an integer")
+    #         if not (1 <= value <= 3):
+    #             raise ValueError("category_id must be between 1 and 3")
             
-        return value
+    #     return value
 
 
     def __repr__(self):
