@@ -49,18 +49,95 @@ const handleSubmitForm = (newMealPlan) => {
   setMealPlans([...mealPlans, newMealPlan])
 }
 
- return (
-   <Routes>
-     <Route path="/users" element={<Users API={API} />} />
-     <Route path="/" element={<HomePage recipes={recipes} mealPlans={mealPlans} />} />
-     <Route path="/recipes/:id" element={<RecipeDetail API={API} />} />
-     <Route path="/categories/:id" element={<CategoryById API={API} />} />
-     <Route path="/categories" element={<Categories API={API} />} />
-     <Route path="/meal_plans/:id" element={<MealPlanDetail API={API} />} />
-     <Route path="/recipes" element={<NewRecipeForm API={API} onHandleSubmit={onHandleSubmit} navigate={navigate}/>} />
-     <Route path="/meal_plans" element={<NewMpForm API={API} handleSubmitForm={handleSubmitForm} navigate={navigate}/>} />
-   </Routes>
- );
+const refreshRecipes = () => {
+  fetch(`${API}/recipes`)
+  .then(response => response.json())
+  .then(data => setRecipes(data))
+}
+
+const refreshMealPlans = () => {
+  fetch(`${API}/meal_plans`)
+  .then(response => response.json())
+  .then(data => setMealPlans(data))
+}
+
+return (
+  <Routes>
+    <Route 
+      path="/" 
+      element={
+        <HomePage 
+          recipes={recipes} 
+          mealPlans={mealPlans} 
+        />
+      } 
+    />
+    <Route 
+      path="/users" 
+      element={
+        <Users 
+          API={API} 
+        />
+      } 
+    />
+    <Route 
+      path="/recipes" 
+      element={
+        <NewRecipeForm 
+          API={API} 
+          onHandleSubmit={onHandleSubmit} 
+          navigate={navigate}
+        />
+      } 
+    />
+    <Route 
+      path="/recipes/:id" 
+      element={
+        <RecipeDetail 
+          API={API} 
+          navigate={navigate} 
+          refreshRecipes={refreshRecipes}
+        />
+      } 
+    />
+    <Route 
+      path="/categories" 
+      element={
+        <Categories 
+          API={API} 
+        />
+      } 
+    />
+    <Route 
+      path="/categories/:id" 
+      element={
+        <CategoryById   
+          API={API} 
+        />
+      } 
+    />
+    <Route 
+      path="/meal_plans" 
+      element={
+        <NewMpForm 
+          API={API} 
+          handleSubmitForm={handleSubmitForm} 
+          navigate={navigate}
+        />
+      } 
+    />
+    <Route 
+      path="/meal_plans/:id" 
+      element={
+        <MealPlanDetail 
+          API={API} 
+          navigate={navigate}
+          refreshMealPlans={refreshMealPlans}
+        />
+      } 
+    />
+  </Routes>
+);
 }
 
 export default Home;

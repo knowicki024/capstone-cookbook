@@ -1,26 +1,113 @@
 import React, { useState, useEffect } from 'react';
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-function MealPlanDetail({API}) {
+function MealPlanDetail({ API, refreshMealPlans, navigate }) {
     const [mealPlan, setMealPlan] = useState(null);
     const { id } = useParams();
+
+    const [formData, setFormData] = useState({
+        date: '',
+        user_id: '',
+        recipe_id: '',
+    });
 
     useEffect(() => {
         fetch(`${API}/meal_plans/${id}`)
         .then(response => response.json())
-        .then(data => setMealPlan(data))
-        .catch(error => console.error('error fetching meal plan'));
+        .then(data => {
+            setMealPlan(data);
+            setFormData({
+                date: data.date,
+                user_id: data.user_id,
+                recipe_id: data.recipe_id,
+            });
+        })
+        .catch(error => console.error('Error fetching meal plan:', error));
     }, [API, id]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          [name]: value
+        }));
+    };
+
+    const handleUpdate = (event) => {
+        event.preventDefault();
+        fetch(`${API}/meal_plans/${id}`, {
+            method: 'PATCH',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(() => {
+            refreshMealPlans();
+            navigate('/');
+        })
+        .catch(error => console.error('There was an error updating the meal plan:', error));
+    };
+
+    const handleDelete = () => {
+        fetch(`${API}/meal_plans/${id}`, {
+          method: 'DELETE',
+        })
+        .then(() => {
+          refreshMealPlans(); 
+          navigate('/');
+        })
+        .catch(error => console.error('There was an error deleting the recipe:', error));
+       };
 
     if (!mealPlan) {
         return <div>Loading...</div>;
     }
 
-    return ( 
-        <div className="mp-card-item">
-            <h4>Date: {mealPlan.date}</h4>
-            <h5>{mealPlan.user_id} 's Meal Plan</h5>
-            <h6>Recipes Include: {mealPlan.recipe_id}</h6>
+    return (
+        <div className="meal-plan-detail">
+          {/* Display Meal Plan Details */}
+          <div className="meal-plan-display">
+            <h2>Meal Plan ID: {mealPlan.id}</h2>
+            <p><strong>Date:</strong> {mealPlan.date}</p>
+            <p><strong>User ID:</strong> {mealPlan.user_id}</p>
+            <p><strong>Recipe ID:</strong> {mealPlan.recipe_id}</p>
+          </div>
+          
+          {/* Edit Form */}
+          <div className="meal-plan-form">
+            <form onSubmit={handleUpdate}>
+              <h4>Edit Meal Plan</h4>
+              <label>Date</label>
+              <input
+                type="date" 
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                required
+              />
+              <label>User ID</label>
+              <input 
+                type="text"
+                name="user_id"
+                value={formData.user_id}
+                onChange={handleChange}
+                required
+              />
+              <label>Recipe ID</label>
+              <input 
+                type="text"
+                name="recipe_id"
+                value={formData.recipe_id}
+                onChange={handleChange}
+                required
+              />
+              <div>
+                <button type="submit">Update Meal Plan</button>
+                <button onClick={handleDelete} style={{marginTop: "10px"}}>Delete Meal Plan</button>
+
+              </div>
+            </form>
+          </div>
         </div>
     );
 }
