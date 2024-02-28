@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { Route, Routes } from "react-router-dom";
+import {useNavigate} from "react-router-dom"
+
+import Users from './Users';
 import RecipeCard from './RecipeCard';
 import RecipeDetail from './RecipeDetail';
-import Users from './Users';
 import Categories from './Categories';
 import CategoryById from './CategoryById';
 import MealPlanDetail from './MealPlanDetail';
 import MealPlanCards from './MealPlanCards'; 
 import NewRecipeForm from './NewRecipeForm';
 import NewMpForm from './NewMpForm';
-import { Route, Routes } from "react-router-dom";
-import {useNavigate} from "react-router-dom"
+import Search from './Search';
+
 
 const API = "http://127.0.0.1:8888";
 
@@ -25,6 +28,7 @@ function HomePage({ recipes, mealPlans }) {
 function Home() {
  const [recipes, setRecipes] = useState([]);
  const [mealPlans, setMealPlans] = useState([]);
+ const [searchTerm, setSearchTerm] = useState("");
  const navigate = useNavigate()
 
  useEffect(() => {
@@ -61,15 +65,29 @@ const refreshMealPlans = () => {
   .then(data => setMealPlans(data))
 }
 
+const searchRecipes = recipes.filter(recipe => {
+  return recipe.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+         recipe.category.name.toLowerCase().includes(searchTerm.toLowerCase());
+});
+
+const handleSearch = (e) => {
+  setSearchTerm(e.target.value)
+}
+
 return (
   <Routes>
     <Route 
       path="/" 
       element={
-        <HomePage 
-          recipes={recipes} 
-          mealPlans={mealPlans} 
-        />
+        <>
+          <Search 
+            onSearch={handleSearch}
+          />
+          <HomePage 
+            recipes={searchRecipes} 
+            mealPlans={mealPlans} 
+          />
+        </>
       } 
     />
     <Route 
