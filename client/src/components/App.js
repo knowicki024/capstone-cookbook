@@ -11,36 +11,13 @@ function App() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch(`${API}/check_session`)
-      .then((r) => {
-        if (r.ok) {
-          return r.json();
-        } else {
-          throw new Error('Not authenticated');
-        }
-      })
-      .then((user) => setUser(user))
-      .catch(() => setUser(null));
-  }, []);
-
-  const onLogin = (user) => {
-    setUser(user);
-    navigate("/home", { replace: true });
-  };
-
-  const onLogout = () => {
-    fetch(`${API}/logout`, { credentials: 'include' })
-      .then(() => setUser(null))
-      .catch(console.error);
-  };
 
   return (
     <>
-      <Header user={user} onLogout={onLogout} />
+      <Header/>
       <Routes>
-        <Route path="/home/*" element={user ? <Home API={API} /> : <Navigate to="/login" />} />
-        <Route path="*" element={<Login onLogin={onLogin} API={API} />} />
+        <Route path="/*" element={user ? <Home API={API} /> : <Navigate to="/login" />} />
+        <Route path="/login" element={<Login API={API} user = {user}/>} />
       </Routes>
     </>
   );

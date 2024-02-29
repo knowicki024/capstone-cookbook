@@ -1,70 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
-function Login({ onLogin, API }) { // Ensure the API prop is used here
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+function Login({ API }) {
+  const [user, setuser] = useState();
+  const [password, setpassword] = useState('');
+  const navigate = useNavigate();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    setIsLoading(true);
-    fetch(`${API}/login`, { // Use the full API path
-      method: "POST",
+  useEffect(() => {
+    fetch(`${API}/check_session`)
+   .then((r) => {
+        if (r.ok) {
+          return r.json();
+        } else {
+          throw new Error('Not authenticated');
+        }
+      })
+   .then((user) => setuser(user))
+   .catch(() => setuser(null));
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetch(`${API}/login`, {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name: username, password }), // Ensure the body keys match your backend expectations
-    }).then((r) => {
-      setIsLoading(false);
-      if (r.ok) {
-        r.json().then((user) => onLogin(user));
-      } else {
-        r.json().then((err) => setErrors([err.error])); // Adjusted for expected error format
-      }
-    }).catch(() => {
-      setIsLoading(false);
-      setErrors(['Network error']);
-    });
-  }
+      body: JSON.stringify({ username: user, password: password }),
+    })
+ .then((response) => response.json())
+ .then((data) => {
+  setuser(data.username);
+  navigate('/', { replace: true });
+ });
+};
 
-  return (
+return (
+  <div>
     <Container>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="username">
+      <Form>
+        <Form.Group controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            autoComplete="off"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit" disabled={isLoading}>
-          {isLoading ? "Loading..." : "Login"}
-        </Button>
-        {errors.length > 0 && (
-          <Form.Text className="text-danger">
-            {errors.map((err, index) => (
-              <div key={index}>{err}</div> // Changed to <div> for possible multiline errors
-            ))}
+          <Form.Control type="username" placeholder="Enter username" />
+          <Form.Text className="text-muted">
+            We'll never share your info with anyone else.
           </Form.Text>
-        )}
+        </Form.Group>
+
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" />
+        </Form.Group>
+
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
       </Form>
     </Container>
-  );
+  </div>
+);
 }
 
 export default Login;

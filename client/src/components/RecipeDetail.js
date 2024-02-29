@@ -47,7 +47,7 @@ function RecipeDetail({ API, navigate, refreshRecipes }) {
   .then(response => response.json())
   .then(updatedRecipe => {
     refreshRecipes();
-    navigate('/home')
+    navigate('/')
   })
   .catch(error => console.error('There was an error updating the recipe:', error));
  };
@@ -58,7 +58,7 @@ function RecipeDetail({ API, navigate, refreshRecipes }) {
   })
   .then(() => {
     refreshRecipes(); 
-    navigate('/home');
+    navigate('/');
   })
   .catch(error => console.error('There was an error deleting the recipe:', error));
  };
