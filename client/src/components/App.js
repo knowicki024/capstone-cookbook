@@ -12,7 +12,7 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`${API}/check_session`, { credentials: 'include' })
+    fetch(`${API}/check_session`)
       .then((r) => {
         if (r.ok) {
           return r.json();
@@ -39,7 +39,7 @@ function App() {
     <>
       <Header user={user} onLogout={onLogout} />
       <Routes>
-        <Route path="/home" element={user ? <Home API={API} /> : <Navigate to="/login" />} />
+        <Route path="/home/*" element={user ? <Home API={API} /> : <Navigate to="/login" />} />
         <Route path="*" element={<Login onLogin={onLogin} API={API} />} />
       </Routes>
     </>
