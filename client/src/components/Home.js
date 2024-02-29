@@ -13,8 +13,9 @@ import NewRecipeForm from './NewRecipeForm';
 import NewMpForm from './NewMpForm';
 import Search from './Search';
 
+// import Login from './Login';
 
-const API = "http://127.0.0.1:8888";
+
 
 function HomePage({ recipes, mealPlans }) {
   return (
@@ -25,7 +26,7 @@ function HomePage({ recipes, mealPlans }) {
   );
 }
 
-function Home() {
+function Home({API}) {
  const [recipes, setRecipes] = useState([]);
  const [mealPlans, setMealPlans] = useState([]);
  const [searchTerm, setSearchTerm] = useState("");
@@ -36,14 +37,14 @@ function Home() {
   .then(response => response.json())
   .then(data => setMealPlans(data))
   .catch(err => console.error('error fetching meal plans'));
- }, []);
+ }, [API]);
 
  useEffect(() => {
    fetch(`${API}/recipes`)
      .then(response => response.json())
      .then(data => setRecipes(data))
      .catch(err => console.error('error fetching recipes'));
- }, []);
+ }, [API]);
 
 const onHandleSubmit = (newRecipe) => {
   setRecipes([...recipes, newRecipe])
@@ -77,7 +78,7 @@ const handleSearch = (e) => {
 return (
   <Routes>
     <Route 
-      path="/" 
+      path="/home" 
       element={
         <>
           <Search 

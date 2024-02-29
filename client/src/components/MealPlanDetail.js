@@ -43,7 +43,7 @@ function MealPlanDetail({ API, refreshMealPlans, navigate }) {
         .then(response => response.json())
         .then(() => {
             refreshMealPlans();
-            navigate('/');
+            navigate('/home');
         })
         .catch(error => console.error('There was an error updating the meal plan:', error));
     };
@@ -54,7 +54,7 @@ function MealPlanDetail({ API, refreshMealPlans, navigate }) {
         })
         .then(() => {
           refreshMealPlans(); 
-          navigate('/');
+          navigate('/home');
         })
         .catch(error => console.error('There was an error deleting the recipe:', error));
        };

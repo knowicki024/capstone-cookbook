@@ -13,20 +13,17 @@ Your own digital cookbook! Keep all your recipes in one location instead of scro
 ## Setup and Install to Deploy:
 
 
-Open two terminals side by side and in the first terminal run:
+To run the application, run the following commands in your terminal from the main directory:
 ```
-pipenv install 
-pipenv shell
 cd server
-flask db upgrade head 
-python seed.py 
-python app.py
-```
-Then in the second terminal run:
-```
-cd client 
-npm install 
-npm start 
+pipenv install 
+pipenv shell 
+python seed.py
+cd ..
+cd client
+npm install
+cd ..
+honcho start -f Procfile.dev
 ```
 
 ## MVP 

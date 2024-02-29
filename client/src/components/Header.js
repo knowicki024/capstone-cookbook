@@ -1,7 +1,14 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 import {Navbar, Container, Nav, Dropdown } from 'react-bootstrap';
 
-function Header() {
+function Header({onLogout}) {
+
+    function handleLogout() {
+        fetch("/logout", {
+          method: "DELETE",
+        }).then(() => onLogout());
+      }
 return(
     <>
     <h1>Capstone Cookbook</h1>
@@ -25,7 +32,8 @@ return(
                 </Dropdown.Menu>
             </Dropdown>
         </Nav>
-        </Container>  
+        </Container>
+        <Button onClick={handleLogout}>Logout</Button> 
     </Navbar>
     </>
 )

@@ -17,9 +17,10 @@ def create_user():
         u = User(
             name=fake.first_name()
         )
+        u.password_hash = 'qwerty123'
         users.append(u)
-    
     return users
+
 
 def create_category():
     categories = ["Appetizer", "Entree", "Dessert"]
