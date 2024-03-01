@@ -30,7 +30,29 @@ function Home({API}) {
  const [recipes, setRecipes] = useState([]);
  const [mealPlans, setMealPlans] = useState([]);
  const [searchTerm, setSearchTerm] = useState("");
+ const [user, setUser] = useState(null);
+
  const navigate = useNavigate()
+
+ const onLogin = (user) => {
+  setUser(user);
+};
+
+const onLogOut = () => {
+  setUser(null);
+};
+
+useEffect(() => {
+  fetch('/check_session')
+    .then((r) => {
+      if (!r.ok) {
+        throw new Error('Session check failed');
+      }
+      return r.json();
+    })
+    .then((user) => setUser(user))
+    .catch(() => setUser(null));
+}, []);
 
  useEffect(() => {
   fetch(`${API}/meal_plans`)
@@ -84,7 +106,10 @@ return (
           <Search 
             onSearch={handleSearch}
           />
-          <HomePage 
+          <HomePage
+            user={user}
+            onLogin={onLogin}
+            onLogOut={onLogOut}
             recipes={searchRecipes} 
             mealPlans={mealPlans} 
           />
