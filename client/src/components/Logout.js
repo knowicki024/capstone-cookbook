@@ -3,10 +3,10 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
 
-function Logout({onLogOut}){
+function Logout({onLogOut, API}){
 
     function handleLogout() {
-        fetch("/logout", {
+        fetch(`${API}/logout`, {
           method: "DELETE",
         }).then(() => onLogOut());
       }

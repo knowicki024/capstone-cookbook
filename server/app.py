@@ -9,41 +9,39 @@ from models import User, Category, Recipe, MealPlan
 
 @app.before_request
 def check_if_logged_in():
-    """Ensure user is logged in for non-public endpoints."""
     allowed_endpoints = ['login', 'logout', 'check_session']
     if request.endpoint not in allowed_endpoints and not session.get('user_id'):
         return {'error': 'Not Authorized'}, 401
 
 class CheckSession(Resource):
-    """Resource to check user session."""
     def get(self):
-        user_id = session.get('user_id')
-        if user_id:
-            user = User.query.get(user_id)
-            return user.to_dict(), 200
+        # import ipdb; ipdb.set_trace()
+        user = User.query.filter_by(id = session['user_id']).first()
+        if user:
+            return make_response(
+                user.to_dict(), 200)
         return {'error': 'Unauthorized'}, 401
 
 class Login(Resource):
-    """Resource for user login."""
     def post(self):
-        data = request.get_json()
-        name = data.get('name')
-        password = data.get('password')
+        name = request.get_json()['name']
+        password = request.get_json()['password']
 
         user = User.query.filter_by(name=name).first()
+        # import ipdb; ipdb.set_trace()
+        # print(user, password)
         if user and user.authenticate(password):
             session['user_id'] = user.id
-            return user.to_dict(), 200
+            response=make_response(user.to_dict(), 200)
+            return response
         return {'error': 'Invalid credentials'}, 401
 
 class Logout(Resource):
-    """Resource for user logout."""
     def delete(self):
-        session.pop('user_id', None)  # Safely remove user_id from session
+        session.pop('user_id', None)  
         return {'message': 'Logged out successfully'}, 204
 
 class Users(Resource):
-    """Resource for managing users."""
     def get(self):
         users = User.query.all()
         return [user.to_dict(rules=('-meal_plans',)) for user in users], 200
@@ -51,14 +49,14 @@ class Users(Resource):
     def post(self):
         data = request.get_json()
         new_user = User(name=data.get('name'))
-        new_user.set_password(data.get('password'))  # Assuming a set_password method exists
+        new_user.set_password(data.get('password'))  
         db.session.add(new_user)
         db.session.commit()
         session['user_id'] = new_user.id
         return new_user.to_dict(rules=('-meal_plans',)), 201
 
 class Categories(Resource):
-    """Resource for managing categories."""
+
     def get(self):
         categories = Category.query.all()
         return [category.to_dict(rules=('-recipes',)) for category in categories], 200
@@ -71,7 +69,7 @@ class Categories(Resource):
         return new_category.to_dict(rules=('-recipes',)), 201
 
 class CategoriesById(Resource):
-    """Resource for a specific category by ID."""
+
     def get(self, id):
         category = Category.query.get(id)
         if category:
@@ -79,7 +77,7 @@ class CategoriesById(Resource):
         return {'error': 'Category not found'}, 404
 
 class Recipes(Resource):
-    """Resource for managing recipes."""
+
     def get(self):
         recipes = Recipe.query.all()
         return [recipe.to_dict() for recipe in recipes], 200
@@ -97,7 +95,7 @@ class Recipes(Resource):
         return new_recipe.to_dict(), 201
 
 class RecipeById(Resource):
-    """Resource for a specific recipe by ID."""
+
     def get(self, id):
         recipe = Recipe.query.get(id)
         if recipe:
@@ -105,7 +103,7 @@ class RecipeById(Resource):
         return {'error': 'Recipe not found'}, 404
 
 class MealPlans(Resource):
-    """Resource for managing meal plans."""
+
     def get(self):
         meal_plans = MealPlan.query.all()
         return [mp.to_dict() for mp in meal_plans], 200
@@ -122,14 +120,14 @@ class MealPlans(Resource):
         return new_mp.to_dict(), 201
 
 class MealPlanById(Resource):
-    """Resource for a specific meal plan by ID."""
+
     def get(self, id):
         mp = MealPlan.query.get(id)
         if mp:
             return mp.to_dict(), 200
         return {'error': 'Meal plan not found'}, 404
 
-# Register resources with the API
+
 api.add_resource(CheckSession, '/check_session')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')

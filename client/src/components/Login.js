@@ -2,35 +2,36 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Alert from 'react-bootstrap/Alert'; // Import Alert component for displaying errors
+import Alert from 'react-bootstrap/Alert'; 
 
 function Login({ onLogin }) {
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); // State to store the error message
+  const [errorMessage, setErrorMessage] = useState(''); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch('/login', {
+    fetch(`/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ name: name,
+      password: password}),
     })
       .then((response) => {
         if (response.ok) {
           return response.json();
         } else if (response.status === 401 || response.status === 500) {
-          throw new Error('Invalid username or password');
+          throw new Error('Invalid name or password');
         }
       })
       .then((user) => {
         onLogin(user);
       })
       .catch((error) => {
-        setErrorMessage(error.message); // Update the error message state
+        setErrorMessage(error.message);
       });
   };
 
@@ -41,8 +42,8 @@ function Login({ onLogin }) {
       <Form onSubmit={handleSubmit} data-testid="login-form">
         <Form.Group className="mb-3" controlId="formGroupEmail">
           <Form.Label>Username</Form.Label>
-          <Form.Control type="text" placeholder="Enter username" value={username}
-            onChange={e => setUsername(e.target.value)} data-testid="formGroupEmail"/>
+          <Form.Control type="text" placeholder="Enter username" value={name}
+            onChange={e => setName(e.target.value)} data-testid="formGroupEmail"/>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
