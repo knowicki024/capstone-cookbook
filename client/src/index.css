@@ -4,4 +4,15 @@
   --link: #61dafb;
   --text: hsla(0, 0%, 100%, 0.88);
 }
+/* body {
+  background-color: #013220;
+  font-style: ;
+} */
+
+.header-background {
+  display: flex; 
+  /* justify-content: space-evenly; */
+  color: white; 
+}
+
 
