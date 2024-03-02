@@ -45,11 +45,14 @@ class Users(Resource):
     def get(self):
         users = User.query.all()
         return [user.to_dict(rules=('-meal_plans',)) for user in users], 200
+    
 
+
+class SignUp(Resource):
     def post(self):
         data = request.get_json()
         new_user = User(name=data.get('name'))
-        new_user.set_password(data.get('password'))  
+        new_user.password_hash=data.get('password')
         db.session.add(new_user)
         db.session.commit()
         session['user_id'] = new_user.id
@@ -131,6 +134,7 @@ class MealPlanById(Resource):
 api.add_resource(CheckSession, '/check_session')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
+api.add_resource(SignUp, '/signup')
 api.add_resource(Users, '/users')
 api.add_resource(Categories, '/categories')
 api.add_resource(CategoriesById, '/categories/<int:id>')
