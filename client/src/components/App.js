@@ -15,13 +15,10 @@ function App() {
   const onLogin = (user) => {
     setUser(user);
     console.log(user)
-
-    navigate('/')
   };
   
   const onLogOut = () => {
     setUser(null);
-    navigate('/login')
   };
   
   useEffect(() => {
@@ -33,16 +30,19 @@ function App() {
         return r.json();
       })
       .then((user) => setUser(user))
-      // navigate('/login')
-      .catch(() => setUser(null));
+      .catch(() => {
+        setUser(null);
+        navigate('/login'); 
+      });
   }, [navigate]);
+  
 
   return (
     <>
       <Header onLogOut={onLogOut} user={user} />
       <Routes>
-        {/* <Route path="/login" element={<Login API={API} onLogin={onLogin} />} /> */}
-        <Route path="*" element={user ? <Home API={API}  /> : <Login API={API} onLogin={onLogin} />} />
+        <Route path="/login" element={<Login API={API} onLogin={onLogin} />} />
+        <Route path="/" element={ <Home API={API}  user={user} />} />
       </Routes>
     </>
   );

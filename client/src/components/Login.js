@@ -3,7 +3,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert'; 
-
 function Login({ onLogin }) {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -12,27 +11,27 @@ function Login({ onLogin }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch(`/login`, {
+    const submittingObj = { 
+      "name": name,
+      "password": password
+    }
+    console.log(submittingObj)
+
+    fetch("http://127.0.0.1:8888/login", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name: name,
-      password: password}),
+      body: JSON.stringify(submittingObj),
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else if (response.status === 401 || response.status === 500) {
-          throw new Error('Invalid name or password');
-        }
+      .then(resp => resp.json())
+      .then(loggedInUserFromServer => {
+        console.log("loggedInUserFromServer", loggedInUserFromServer)
+        onLogin(loggedInUserFromServer)
+                
       })
-      .then((user) => {
-        onLogin(user);
-      })
-      .catch((error) => {
-        setErrorMessage(error.message);
-      });
+      .catch(console.error)
+      
   };
 
   return (
