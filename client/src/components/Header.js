@@ -5,7 +5,7 @@ function Header() {
   return(
     <div className="header-background">
       <h1>Capstone Cookbook</h1>
-      <Navbar bg="light" data-bs-theme="dark">
+      <Navbar bg="dark" data-bs-theme="dark">
         <Container>
           <Nav className="me-auto">
               <Nav.Link href="/">Home</Nav.Link>
