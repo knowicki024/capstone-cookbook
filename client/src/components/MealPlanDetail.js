@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
-function MealPlanDetail({ API, refreshMealPlans, navigate }) {
+function MealPlanDetail({ refreshMealPlans, navigate }) {
     const [mealPlan, setMealPlan] = useState(null);
     const { id } = useParams();
 
@@ -12,7 +12,7 @@ function MealPlanDetail({ API, refreshMealPlans, navigate }) {
     });
 
     useEffect(() => {
-        fetch(`${API}/meal_plans/${id}`)
+        fetch(`/meal_plans/${id}`)
         .then(response => response.json())
         .then(data => {
             setMealPlan(data);
@@ -23,7 +23,7 @@ function MealPlanDetail({ API, refreshMealPlans, navigate }) {
             });
         })
         .catch(error => console.error('Error fetching meal plan:', error));
-    }, [API, id]);
+    }, [id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -35,7 +35,7 @@ function MealPlanDetail({ API, refreshMealPlans, navigate }) {
 
     const handleUpdate = (event) => {
         event.preventDefault();
-        fetch(`${API}/meal_plans/${id}`, {
+        fetch(`/meal_plans/${id}`, {
             method: 'PATCH',
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(formData)
@@ -49,7 +49,7 @@ function MealPlanDetail({ API, refreshMealPlans, navigate }) {
     };
 
     const handleDelete = () => {
-        fetch(`${API}/meal_plans/${id}`, {
+        fetch(`/meal_plans/${id}`, {
           method: 'DELETE',
         })
         .then(() => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function NewRecipeForm({ API, onHandleSubmit, navigate }) {
+function NewRecipeForm({  onHandleSubmit, navigate }) {
   const initObj = {
     name: '',
     ingredients: '',
@@ -21,7 +21,7 @@ function NewRecipeForm({ API, onHandleSubmit, navigate }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch(`${API}/recipes`, {
+    fetch(`/recipes`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

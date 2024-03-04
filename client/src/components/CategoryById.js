@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-function CategoryById( { API } ) {
+function CategoryById(  ) {
   const [category, setCategory] = useState(null);
   const [recipes, setRecipes] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`${API}/categories/${id}`)
+    fetch(`/categories/${id}`)
       .then(response => response.json())
       .then(data => {
         setCategory(data);
@@ -18,7 +18,7 @@ function CategoryById( { API } ) {
       .catch(error => {
         console.error('Error fetching category details:', error);
       });
-  }, [API, id]);
+  }, [ id]);
 
   return (
     <div>

@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
-function Categories({API}){
+function Categories(){
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState('');
   // Assuming API is defined somewhere globally or imported
 
   useEffect(() => {
-    fetch(`${API}/categories`)
+    fetch(`/categories`)
       .then((response) => response.json())
       .then(data => setCategories(data))
       .catch(error => console.error('Error:', error));
-  }, [API]); 
+  }, []); 
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch(`${API}/categories`, {
+    fetch(`/categories`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: newCategory }),

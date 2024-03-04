@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function NewMpForm({ API, handleSubmitForm, navigate }) {
+function NewMpForm({ handleSubmitForm, navigate }) {
     const initObject = {
         date: '',
         user_id: '',
@@ -17,7 +17,7 @@ function NewMpForm({ API, handleSubmitForm, navigate }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        fetch(`${API}/meal_plans`, {
+        fetch(`/meal_plans`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData),

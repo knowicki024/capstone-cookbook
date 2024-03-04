@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
-function RecipeDetail({ API, navigate, refreshRecipes }) {
+function RecipeDetail({ navigate, refreshRecipes }) {
  const [recipe, setRecipe] = useState(null);
  const { id } = useParams();
 
@@ -14,7 +14,7 @@ function RecipeDetail({ API, navigate, refreshRecipes }) {
  });
 
  useEffect(() => {
-   fetch(`${API}/recipes/${id}`)
+   fetch(`/recipes/${id}`)
    .then(response => response.json())
    .then(data => {
      setRecipe(data);
@@ -27,7 +27,7 @@ function RecipeDetail({ API, navigate, refreshRecipes }) {
      });
    })
    .catch(error => console.error('error fetching recipe details'));
- }, [API, id]);
+ }, [id]);
 
 
  const handleChange = (e) => {
@@ -41,7 +41,7 @@ function RecipeDetail({ API, navigate, refreshRecipes }) {
  const handleUpdate = (event) => {
   event.preventDefault();
 
-  fetch(`${API}/recipes/${id}`, {
+  fetch(`/recipes/${id}`, {
     method: 'PATCH',
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(formData)
@@ -55,7 +55,7 @@ function RecipeDetail({ API, navigate, refreshRecipes }) {
  };
 
  const handleDelete = () => {
-  fetch(`${API}/recipes/${id}`, {
+  fetch(`/recipes/${id}`, {
     method: 'DELETE',
   })
   .then(() => {

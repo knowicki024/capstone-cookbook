@@ -36,6 +36,6 @@ api = Api(app)
 bcrypt = Bcrypt(app)
 
 # Instantiate CORS
-CORS(app)
+CORS(app, supports_credentials=True)
 
 # , supports_credentials=True, resources={r"/*": {"origins": "http://localhost:3000"}}

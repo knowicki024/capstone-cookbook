@@ -2,24 +2,24 @@
 import React, { useState, useEffect } from 'react';
 
 
-function Users({API}) {
+function Users() {
  const [users, setUsers] = useState([]);
  const [newUserName, setNewUserName] = useState('');
 
 
  useEffect(() => {
    // GET /users
-   fetch(`${API}/users`)
+   fetch(`/users`)
      .then(response => response.json())
      .then(data => setUsers(data))
      .catch(error => console.error('Error fetching users:', error));
- }, [API]);
+ }, []);
 
 
  const handleSubmit = (event) => {
    event.preventDefault();
    // POST /users
-   fetch(`${API}/users`, {
+   fetch(`/users`, {
      method: 'POST',
      headers: {
        'Content-Type': 'application/json',
