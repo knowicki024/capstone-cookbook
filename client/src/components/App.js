@@ -41,8 +41,18 @@ function App() {
     <>
       <Header onLogOut={onLogOut} user={user} />
       <Routes>
-        <Route path="/login" element={<Login API={API} onLogin={onLogin} />} />
-        <Route path="/" element={ <Home API={API}  user={user} />} />
+        <Route
+          path="/login"
+          element={<Login API={API} onLogin={onLogin} />}
+        />
+        <Route
+          path="/"
+          element={user? (
+            <Home API={API} user={user} />
+          ) : (
+            <Login API={API} onLogin={onLogin} />
+          )}
+        />
       </Routes>
     </>
   );

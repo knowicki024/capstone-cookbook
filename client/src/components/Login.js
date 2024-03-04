@@ -40,7 +40,7 @@ function Login({ onLogin }) {
 
       <Form onSubmit={handleSubmit} data-testid="login-form">
         <Form.Group className="mb-3" controlId="formGroupEmail">
-          <Form.Label>Username</Form.Label>
+          <Form.Label>User</Form.Label>
           <Form.Control type="text" placeholder="Enter username" value={name}
             onChange={e => setName(e.target.value)} data-testid="formGroupEmail"/>
         </Form.Group>
