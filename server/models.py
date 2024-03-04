@@ -1,28 +1,47 @@
 from sqlalchemy_serializer import SerializerMixin
-# from sqlalchemy.ext.associationproxy import association_proxy
+from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import relationship
-# from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
+from sqlalchemy.ext.hybrid import hybrid_property
 
 
-from config import db
+from config import db, bcrypt
 
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
+    _password_hash = db.Column(db.String)
     
     meal_plans = db.relationship('MealPlan', back_populates='user', cascade='all, delete')
 
-    serialize_rules = ('-meal_plans.user',)
+    serialize_rules = ('-meal_plans.user','-_password_hash',)
+
+    @hybrid_property
+    def password_hash(self):
+        raise AttributeError('Password hash cannot be viewed!')
+    
+    @password_hash.setter
+    def password_hash(self, password):
+        new_hashed_password = bcrypt.generate_password_hash(password.encode('utf-8'))
+
+        self._password_hash = new_hashed_password.decode('utf-8')
+
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(
+            self._password_hash,
+            password.encode('utf-8')
+        )
+    
 
     @validates('name')
     def validate_name(self, key, name):
         if not isinstance(name, str):
             raise ValueError("Name must be a string")
         if not (1 <= len(name) <= 10):
-            raise ValueError("Name must be between 1 and 10 characters")
+            raise ValueError("Name must be between 1 and 20 characters")
         return name
 
     def __repr__(self):
@@ -39,7 +58,7 @@ class Category(db.Model, SerializerMixin):
     serialize_rules = ('-recipes.category',)
 
     def __repr__(self):
-        return f'<Category {self.id}: {self.name}>'
+        return f'<Category {self.id} Username: {self.name}>'
 
 
 class Recipe(db.Model, SerializerMixin):
