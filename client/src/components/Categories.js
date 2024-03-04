@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 function Categories(){
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState('');
-  // Assuming API is defined somewhere globally or imported
 
   useEffect(() => {
     fetch(`/categories`)
