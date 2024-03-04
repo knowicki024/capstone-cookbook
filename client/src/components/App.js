@@ -3,8 +3,14 @@ import { Route, Routes} from 'react-router-dom';
 import Home from './Home';
 // import HomePage from './Home';
 import Header from './Header';
+
 import Login from './Login';
 import {useNavigate} from "react-router-dom"
+
+import '../index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 const API = "http://127.0.0.1:8888";
 

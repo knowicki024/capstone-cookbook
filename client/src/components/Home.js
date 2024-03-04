@@ -13,6 +13,7 @@ import Search from './Search';
 import MainPage from './MainPage';
 
 
+
 function Home({API}) {
   const [recipes, setRecipes] = useState([]);
   const [mealPlans, setMealPlans] = useState([]);

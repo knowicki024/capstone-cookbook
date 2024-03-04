@@ -67,7 +67,7 @@ class Recipe(db.Model, SerializerMixin):
     name = db.Column(db.String)
     ingredients = db.Column(db.String)
     directions = db.Column(db.String)
-    
+    image = db.Column(db.String, nullable=True)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     category = relationship('Category', back_populates='recipes')
     meal_plans = db.relationship('MealPlan', back_populates='recipe', cascade='all, delete')

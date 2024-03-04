@@ -5,6 +5,7 @@ function NewRecipeForm({ API, onHandleSubmit, navigate }) {
     name: '',
     ingredients: '',
     directions: '',
+    image: '',
     category_id: ''
   }
 
@@ -62,6 +63,15 @@ function NewRecipeForm({ API, onHandleSubmit, navigate }) {
           value={formData.directions}
           onChange={handleChange}
           required
+        />
+      </div>
+      <div>
+        <label>Image</label>
+        <textarea
+        name="image"
+        value={formData.image}
+        onChange={handleChange}
+        required
         />
       </div>
       <div>

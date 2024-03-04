@@ -86,16 +86,21 @@ class Recipes(Resource):
         return [recipe.to_dict() for recipe in recipes], 200
 
     def post(self):
-        data = request.get_json()
-        new_recipe = Recipe(
-            name=data.get('name'),
-            ingredients=data.get('ingredients'),
-            directions=data.get('directions'),
-            category_id=data.get('category_id')
-        )
-        db.session.add(new_recipe)
-        db.session.commit()
-        return new_recipe.to_dict(), 201
+        try:
+            data = request.get_json()
+            new_recipe = Recipe(
+                name=data['name'],
+                ingredients=data['ingredients'],
+                directions=data['directions'],
+                image=data['image'],
+                category_id=data['category_id']
+            )
+            db.session.add(new_recipe)
+            db.session.commit()
+            return make_response(new_recipe.to_dict(), 201)
+        except ValueError:
+            return make_response({'error': 'Failed to add new recipe'}, 400)
+
 
 class RecipeById(Resource):
 
@@ -121,6 +126,7 @@ class MealPlans(Resource):
         db.session.add(new_mp)
         db.session.commit()
         return new_mp.to_dict(), 201
+
 
 class MealPlanById(Resource):
 

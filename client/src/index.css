@@ -4,4 +4,15 @@
   --link: #61dafb;
   --text: hsla(0, 0%, 100%, 0.88);
 }
+body {
+  background-color: url('https://www.publicdomainpictures.net/pictures/120000/nahled/vintage-flowers-wallpaper-pattern.jpg');
+  /* font-style: ; */
+}
+
+/* .header-background {
+  display: flex; 
+  justify-content: space-evenly;
+  color: white; 
+} */
+
 
