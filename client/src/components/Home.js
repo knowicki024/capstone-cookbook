@@ -13,7 +13,7 @@ import Search from './Search';
 import MainPage from './MainPage';
 
 
-const API = "http://127.0.0.1:8888";
+// const API = "http://127.0.0.1:8888";
 
 
 function Home() {
@@ -21,14 +21,15 @@ function Home() {
  const [mealPlans, setMealPlans] = useState([]);
  const [searchTerm, setSearchTerm] = useState("");
  const navigate = useNavigate()
+
  useEffect(() => {
-  fetch(`${API}/meal_plans`)
+  fetch(`/meal_plans`)
   .then(response => response.json())
   .then(data => setMealPlans(data))
   .catch(err => console.error('error fetching meal plans'));
  }, []);
  useEffect(() => {
-   fetch(`${API}/recipes`)
+   fetch(`/recipes`)
      .then(response => response.json())
      .then(data => setRecipes(data))
      .catch(err => console.error('error fetching recipes'));
@@ -40,12 +41,12 @@ const handleSubmitForm = (newMealPlan) => {
   setMealPlans([...mealPlans, newMealPlan])
 }
 const refreshRecipes = () => {
-  fetch(`${API}/recipes`)
+  fetch(`/recipes`)
   .then(response => response.json())
   .then(data => setRecipes(data))
 }
 const refreshMealPlans = () => {
-  fetch(`${API}/meal_plans`)
+  fetch(`/meal_plans`)
   .then(response => response.json())
   .then(data => setMealPlans(data))
 }
@@ -76,7 +77,6 @@ return (
       path="/users" 
       element={
         <Users 
-          API={API} 
         />
       } 
     />
@@ -84,7 +84,6 @@ return (
       path="/recipes" 
       element={
         <NewRecipeForm 
-          API={API} 
           onHandleSubmit={onHandleSubmit} 
           navigate={navigate}
         />
@@ -94,7 +93,6 @@ return (
       path="/recipes/:id" 
       element={
         <RecipeDetail 
-          API={API} 
           navigate={navigate} 
           refreshRecipes={refreshRecipes}
         />
@@ -104,7 +102,6 @@ return (
       path="/categories" 
       element={
         <Categories 
-          API={API} 
         />
       } 
     />
@@ -112,7 +109,6 @@ return (
       path="/categories/:id" 
       element={
         <CategoryById   
-          API={API} 
         />
       } 
     />
@@ -120,7 +116,6 @@ return (
       path="/meal_plans" 
       element={
         <NewMpForm 
-          API={API} 
           handleSubmitForm={handleSubmitForm} 
           navigate={navigate}
         />
@@ -130,7 +125,6 @@ return (
       path="/meal_plans/:id" 
       element={
         <MealPlanDetail 
-          API={API} 
           navigate={navigate}
           refreshMealPlans={refreshMealPlans}
         />

@@ -109,6 +109,28 @@ class RecipeById(Resource):
         if recipe:
             return recipe.to_dict(), 200
         return {'error': 'Recipe not found'}, 404
+    
+    def patch(self, id):
+        recipe = Recipe.query.filter(Recipe.id == id).first()
+        if recipe:
+            try:
+                data = request.get_json()
+                for attr in data:
+                    setattr(recipe, attr, data[attr])
+                db.session.commit()
+                return make_response(recipe.to_dict(), 202)
+            except ValueError:
+                return make_response({'error': 'Failed to edit recipe'}, 400)
+        else:
+            return make_response({'error': 'recipe not found'}, 400)
+        
+    def delete(self, id):
+        recipe = Recipe.query.filter(Recipe.id == id).first()
+        if recipe:
+            db.session.delete(recipe)
+            db.session.commit()
+            return make_response({}, 204)
+        return make_response({'error':'recipe not found'}, 404)
 
 class MealPlans(Resource):
 
@@ -135,6 +157,28 @@ class MealPlanById(Resource):
         if mp:
             return mp.to_dict(), 200
         return {'error': 'Meal plan not found'}, 404
+    
+    def patch(self, id):
+        mp_inst = MealPlan.query.filter(MealPlan.id == id).first()
+        if mp_inst:
+            try:
+                data = request.get_json()
+                if 'date' in data:
+                    data['date'] = date.fromisoformat(data['date'])
+                for attr in data:
+                    setattr(mp_inst, attr, data[attr])
+                db.session.commit()
+                return make_response(mp_inst.to_dict(), 202)
+            except ValueError:
+                return make_response({'error': 'failed to edit meal plan'}, 400)
+            
+    def delete(self, id):
+        mp_inst = MealPlan.query.filter(MealPlan.id == id).first()
+        if mp_inst:
+            db.session.delete(mp_inst)
+            db.session.commit()
+            return make_response({}, 204)
+        return make_response({'error' : 'meal plan not found'}, 404)
 
 
 # api.add_resource(CheckSession, '/check_session')

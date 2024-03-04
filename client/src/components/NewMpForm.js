@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
-function NewMpForm({ API, handleSubmitForm, navigate }) {
+function NewMpForm({ handleSubmitForm, navigate }) {
     const initObject = {
         date: '',
         user_id: '',
-        recipe_id: '' 
+        recipe_id: '',
+        recipe_name: ''
     };
 
     const [formData, setFormData] = useState(initObject);
@@ -14,13 +15,29 @@ function NewMpForm({ API, handleSubmitForm, navigate }) {
         setFormData({ ...formData, [name]: value });
     };
 
+    const handleFetchRecipeName = () => {
+        if (formData.recipe_id) {
+            fetch(`/recipes/${formData.recipe_id}`)
+            .then(response => response.json())
+            .then(data => {
+                // Assuming 'name' is the property that contains the recipe name
+                setFormData(prevFormData => ({
+                    ...prevFormData,
+                    recipe_name: data.name
+                }));
+            })
+            .catch(error => console.error('Error fetching recipe:', error));
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        const { recipe_name, ...submitData } = formData;
 
-        fetch(`${API}/meal_plans`, {
+        fetch(`/meal_plans`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData),
+            body: JSON.stringify(submitData),
         })
         .then(response => {
             if (response.ok) {
@@ -37,40 +54,60 @@ function NewMpForm({ API, handleSubmitForm, navigate }) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div className="container mt-3">
             <h1>New Meal Plan</h1>
-            <div>
-                <label>Date</label>
-                <input
-                    type="text"
-                    name="date"
-                    value={formData.date}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <div>
-                <label>User ID</label>
-                <input
-                    type="text"
-                    name="user_id"
-                    value={formData.user_id}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <div>
-                <label>Recipe ID</label>
-                <input
-                    type="text"
-                    name="recipe_id"
-                    value={formData.recipe_id}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <button type="submit">Submit</button>
-        </form>
+            <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                    <label htmlFor="date" className="form-label">Date</label>
+                    <input
+                        type="date"
+                        className="form-control"
+                        id="date"
+                        name="date"
+                        value={formData.date}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="user_id" className="form-label">User ID</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        id="user_id"
+                        name="user_id"
+                        value={formData.user_id}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="recipe_id" className="form-label">Recipe ID</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        id="recipe_id"
+                        name="recipe_id"
+                        value={formData.recipe_id}
+                        onChange={handleChange}
+                        onBlur={handleFetchRecipeName}
+                        required
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="recipe_name" className="form-label">Recipe Name</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="recipe_name"
+                        name="recipe_name"
+                        value={formData.recipe_name}
+                        readOnly 
+                    />
+                </div>
+                <button type="submit" className="btn btn-primary">Submit</button>
+            </form>
+        </div>
     );
 }
 
