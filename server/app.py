@@ -70,6 +70,7 @@ class Recipes(Resource):
                 name=data['name'],
                 ingredients=data['ingredients'],
                 directions=data['directions'],
+                image=data['image'],
                 category_id=data['category_id']
             )
             db.session.add(new_recipe)
@@ -121,7 +122,7 @@ class MealPlans(Resource):
             new_mp = MealPlan(
                date = date_obj,
                user_id = data['user_id'],
-               recipe_id = data['recipe_id'], 
+               recipe_id = data['recipe_id']
             )
             db.session.add(new_mp)
             db.session.commit()

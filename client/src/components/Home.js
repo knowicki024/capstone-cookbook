@@ -3,27 +3,18 @@ import { Route, Routes } from "react-router-dom";
 import {useNavigate} from "react-router-dom"
 
 import Users from './Users';
-import RecipeCard from './RecipeCard';
 import RecipeDetail from './RecipeDetail';
 import Categories from './Categories';
 import CategoryById from './CategoryById';
 import MealPlanDetail from './MealPlanDetail';
-import MealPlanCards from './MealPlanCards'; 
 import NewRecipeForm from './NewRecipeForm';
 import NewMpForm from './NewMpForm';
 import Search from './Search';
+import MainPage from './MainPage';
 
 
 const API = "http://127.0.0.1:8888";
 
-function HomePage({ recipes, mealPlans }) {
-  return (
-    <div>
-      <RecipeCard recipes={recipes} />
-      <MealPlanCards mealPlans={mealPlans} />
-    </div>
-  );
-}
 
 function Home() {
  const [recipes, setRecipes] = useState([]);
@@ -83,7 +74,7 @@ return (
           <Search 
             onSearch={handleSearch}
           />
-          <HomePage 
+          <MainPage 
             recipes={searchRecipes} 
             mealPlans={mealPlans} 
           />

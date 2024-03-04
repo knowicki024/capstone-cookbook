@@ -9,6 +9,7 @@ function RecipeDetail({ API, navigate, refreshRecipes }) {
    name: '',
    ingredients: '',
    directions: '',
+   image: '',
    category_id: '',
  });
 
@@ -21,6 +22,7 @@ function RecipeDetail({ API, navigate, refreshRecipes }) {
        name: data.name,
        ingredients: data.ingredients,
        directions: data.directions,
+       image: data.image,
        category_id: data.category_id
      });
    })
@@ -74,6 +76,7 @@ function RecipeDetail({ API, navigate, refreshRecipes }) {
       <h2>{recipe.name}</h2>
       <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
       <p><strong>Directions:</strong> {recipe.directions}</p>
+      <p><strong>Image:</strong> {recipe.image}</p>
       <p><strong>Category ID:</strong> {recipe.category_id}</p>
     </div>
     
@@ -103,6 +106,14 @@ function RecipeDetail({ API, navigate, refreshRecipes }) {
           onChange={handleChange}
           required
         />
+        <label>Image</label>
+        <input
+        type="text"
+        value={formData.image}
+        onChange={handleChange}
+        required
+        />
+        
         <label>Category ID</label>
         <input
           type="text"
