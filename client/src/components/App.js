@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Header from './Header';
-import Home from './Home';
+// import Home from './Home';
 import Login from './Login';
 
 import '../index.css';
@@ -24,8 +24,8 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route path="/login" element={!isLoggedIn ? <Login onLogin={handleLogin} /> : <Navigate replace to="/" />} />
-        <Route path="/" element={isLoggedIn ? <Home /> : <Navigate replace to="/login" />} />
+        {/* <Route path="/login" element={!isLoggedIn ? <Login onLogin={handleLogin} /> : <Navigate replace to="/" />} /> */}
+        <Route path="/" element={ <Login onLogin={handleLogin}/> }/>
       </Routes>
     </>
   );

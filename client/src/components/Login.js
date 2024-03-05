@@ -3,10 +3,12 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert'; 
+import { useNavigate } from'react-router-dom';
 function Login({ onLogin }) {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(''); 
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,7 +19,7 @@ function Login({ onLogin }) {
     }
     console.log(submittingObj)
 
-    fetch("http://127.0.0.1:8888/login", {
+    fetch("/login", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,7 +31,7 @@ function Login({ onLogin }) {
       .then(loggedInUserFromServer => {
         console.log("loggedInUserFromServer", loggedInUserFromServer)
         onLogin(loggedInUserFromServer)
-                
+        navigate('/home')        
       })
       .catch(console.error)
       

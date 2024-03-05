@@ -30,7 +30,7 @@ function NewRecipeForm({  onHandleSubmit, navigate }) {
     })
     .then(response => response.json())
     .then(onHandleSubmit)
-    navigate('/')
+    navigate('/home')
     setFormData(initObj)
 }
 

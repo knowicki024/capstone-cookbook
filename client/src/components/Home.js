@@ -66,7 +66,7 @@ const handleSearch = (e) => {
 return (
   <Routes>
     <Route 
-      path="/" 
+      path="/home" 
       element={
         <>
           <Search 

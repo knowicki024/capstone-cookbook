@@ -49,7 +49,7 @@ function RecipeDetail({ navigate, refreshRecipes }) {
   .then(response => response.json())
   .then(updatedRecipe => {
     refreshRecipes();
-    navigate('/')
+    navigate('/home')
   })
   .catch(error => console.error('There was an error updating the recipe:', error));
  };
@@ -60,7 +60,7 @@ function RecipeDetail({ navigate, refreshRecipes }) {
   })
   .then(() => {
     refreshRecipes(); 
-    navigate('/');
+    navigate('/home');
   })
   .catch(error => console.error('There was an error deleting the recipe:', error));
  };
