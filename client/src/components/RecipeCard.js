@@ -2,22 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Carousel from 'react-bootstrap/Carousel';
 import Container from 'react-bootstrap/Container';
 
 function RecipeCard({ recipes }) {
     return (
         <Container>
-            <Row xs={1} md={2} lg={3} className="g-4">
+            <Carousel interval={2000}>
                 {recipes.map((recipe, index) => (
-                    <Col key={index}>
+                    <Carousel.Item key={index}>
                         <Card className="h-100">
                             <Card.Img 
                                 variant="top" 
                                 src={recipe.image || 'default-image-url.jpg'} 
                                 className="img-fluid"
-                                style={{ objectFit: 'cover', height: '200px' }} 
+                                style={{ objectFit: 'contain', height: '600px' }} 
                             />
                             <Card.Body>
                                 <Card.Title>{recipe.name}</Card.Title>
@@ -37,9 +36,9 @@ function RecipeCard({ recipes }) {
                                 </Link>
                             </Card.Body>
                         </Card>
-                    </Col>
+                    </Carousel.Item>
                 ))}
-            </Row>
+            </Carousel>
         </Container>
     );
 }

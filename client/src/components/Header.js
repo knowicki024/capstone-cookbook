@@ -4,8 +4,8 @@ import { Navbar, Container, Nav, Dropdown } from 'react-bootstrap';
 
 function Header() {
   return(
-    <div className="header-background">
-      <h1>Capstone Cookbook</h1>
+    <div className="dm-serif-display-regular">
+      <h1 className="header-background">Capstone Cookbook</h1>
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
           <Nav className="me-auto">
@@ -26,10 +26,10 @@ function Header() {
                   </Dropdown.Menu>
               </Dropdown>
           </Nav>
-          </Container>  
+        </Container>  
       </Navbar>
     </div>
   )
-
 }
+
 export default Header;

@@ -50,7 +50,7 @@ D. Delete recipes, meal plans
 
 - Add validation to `User`
     - must have `name` 
-    - must be string between 1 and 10 characters
+    - must be string between 1 and 20 characters
 
 - Add validation to `MealPlan` 
     - must have a `date`.

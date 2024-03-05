@@ -18,7 +18,6 @@ function MealPlanDetail({ refreshMealPlans }) {
           fetch(`/recipes/${formData.recipe_id}`)
           .then(response => response.json())
           .then(data => {
-              // Assuming 'name' is the property that contains the recipe name
               setFormData(prevFormData => ({
                   ...prevFormData,
                   recipe_name: data.name

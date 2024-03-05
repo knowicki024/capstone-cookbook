@@ -5,23 +5,31 @@
   --text: hsla(0, 0%, 100%, 0.88);
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=DM+Serif+Display:ital@0;1&family=Roboto+Slab:wght@100..900&family=Xanh+Mono:ital@0;1&display=swap');
 
 body {
   background-image: url('https://i.imgur.com/YCIv148.jpeg');
-  /* background-repeat: repeat; */
-  /* font-style: #B08A00 */
+  background-repeat: repeat;
 }
-.abril-fatface-regular {
-  font-family: "Abril Fatface", serif;
+
+.dm-serif-display-regular {
+  font-family: "DM Serif Display", serif;
   font-weight: 400;
   font-style: normal;
 }
 
+.dm-serif-display-regular-italic {
+  font-family: "DM Serif Display", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+.large-header {
+  padding-left: 20px;
+  font-size: 75px; /* or specific px size like 24px */
+}
+.header-background {
+  font-size: 110px;
+  background-color:#FFC0CB;
+  margin-bottom: 0;
+}
 
-
-
-/* .header-background {
-  display: flex; 
-  justify-content: space-evenly;
-  color: white; 
-} */
