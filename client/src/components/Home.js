@@ -28,13 +28,15 @@ function Home() {
   .then(data => setMealPlans(data))
   .catch(err => console.error('error fetching meal plans'));
  }, []);
- useEffect(() => {
+
+useEffect(() => {
    fetch(`/recipes`)
      .then(response => response.json())
      .then(data => setRecipes(data))
      .catch(err => console.error('error fetching recipes'));
  }, []);
-const onHandleSubmit = (newRecipe) => {
+
+ const onHandleSubmit = (newRecipe) => {
   setRecipes([...recipes, newRecipe])
 }
 const handleSubmitForm = (newMealPlan) => {
