@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+// import { useCategories } from './CategoriesContext'; 
 
 
 function Categories(){
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState('');
-
+  // const { addCategory } = useCategories();
 
   useEffect(() => {
     fetch(`/categories`)

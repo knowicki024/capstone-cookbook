@@ -3,6 +3,7 @@ import React from 'react';
 import { Navbar, Container, Nav, Dropdown } from 'react-bootstrap';
 
 function Header() {
+
   return(
     <div className="dm-serif-display-regular">
       <h1 className="header-background">Capstone Cookbook</h1>
