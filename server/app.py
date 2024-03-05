@@ -7,11 +7,11 @@ from datetime import date
 from config import app, db, api
 from models import User, Category, Recipe, MealPlan
 
-@app.before_request
-def check_if_logged_in():
-    allowed_endpoints = ['login', 'logout', 'recipes', 'meal_plans']
-    if request.endpoint not in allowed_endpoints and not session.get('user_id'):
-        return {'error': 'Not Authorized'}, 401
+# @app.before_request
+# def check_if_logged_in():
+#     allowed_endpoints = ['login', 'logout', 'recipes', 'meal_plans']
+#     if request.endpoint not in allowed_endpoints and not session.get('user_id'):
+#         return {'error': 'Not Authorized'}, 401
 
 class CheckSession(Resource):
     def get(self):
