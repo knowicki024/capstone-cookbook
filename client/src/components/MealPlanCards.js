@@ -36,7 +36,7 @@ function MealPlanCards({ mealPlans }) {
                                 <Card.Text>Recipe ID: {mealPlan.recipe_id}</Card.Text>
                                 <Card.Text>Recipe Name: {mealPlan.recipe_name}</Card.Text>
                                 <Link to={`/meal_plans/${mealPlan.id}`}>
-                                    <Button variant="primary">View Meal Plan</Button>
+                                    <Button className="btn" variant="primary">View Meal Plan</Button>
                                 </Link>
                             </Card.Body>
                         </Card>

@@ -141,7 +141,7 @@ function RecipeDetail({ navigate, refreshRecipes }) {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary me-2">Update Recipe</button>
+        <button type="submit" className="btn">Update Recipe</button>
         <button type="button" className="btn btn-danger" onClick={handleDelete}>Delete Recipe</button>
       </form>
     </div>

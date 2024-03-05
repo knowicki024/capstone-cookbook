@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
  return (
-   <div class="dm-serif-display-regular">
+   <div className="dm-serif-display-regular">
      <Header />
      <Routes>
        <Route path="*" element={<Home />} />

@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 function MealPlanDetail({ refreshMealPlans }) {
     const [mealPlan, setMealPlan] = useState(null);
     const { id } = useParams();
-    const navigate = useNavigate(); // Assuming you're using react-router-dom v5 or above
+    const navigate = useNavigate(); 
 
     const [formData, setFormData] = useState({
         date: '',
@@ -139,7 +139,7 @@ function MealPlanDetail({ refreshMealPlans }) {
                   readOnly
             />
               </div>
-              <button type="submit" className="btn btn-primary me-2">Update Meal Plan</button>
+              <button type="submit" className="btn">Update Meal Plan</button>
               <button type="button" className="btn btn-danger" onClick={handleDelete}>Delete Meal Plan</button>
             </form>
           </div>

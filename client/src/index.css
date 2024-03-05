@@ -25,11 +25,25 @@ body {
 }
 .large-header {
   padding-left: 20px;
-  font-size: 75px; /* or specific px size like 24px */
+  font-size: 75px; 
 }
 .header-background {
   font-size: 110px;
-  background-color:#FFC0CB;
+  background-color:whitesmoke;
   margin-bottom: 0;
 }
+.btn {
+  background-color: #9CAB86;
+}
+.btn.btn-danger {
+  background-color: black; 
+}
+.search.my-3 {
+  margin-left: 90px;
+  margin-right: auto;
+  width: 50%;
+  padding-top: 25px;
+  box-shadow: #9CAB86;
+}
+
 
