@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
+
 function RecipeCard({ recipes }) {
     return (
         <Container className="d-flex flex-wrap justify-content-start">
@@ -35,6 +36,7 @@ function RecipeCard({ recipes }) {
                 </Card>
             ))}
         </Container>
+
     );
 }
 

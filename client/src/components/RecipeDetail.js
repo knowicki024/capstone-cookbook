@@ -69,15 +69,20 @@ function RecipeDetail({ navigate, refreshRecipes }) {
  }
 
  return (
-  <div className="container mt-4">
-    {/* Display Recipe Details */}
-    <div className="mb-4">
-      <h2>{recipe.name}</h2>
-      <p><strong>Image:</strong> <img src={recipe.image} alt={recipe.name} className="img-fluid" /></p>
-      <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
-      <p><strong>Directions:</strong> {recipe.directions}</p>
-      <p><strong>Category ID:</strong> {recipe.category_id}</p>
+<div className="container mt-4">
+  <div className="row justify-content-center mb-4">
+    <div className="col-12 col-md-8 col-lg-4">
+      <div className="card">
+        <img src={recipe.image} alt={recipe.name} className="card-img-top img-fluid" />
+        <div className="card-body">
+          <h5 className="card-title">{recipe.name}</h5>
+          <p className="card-text"><strong>Ingredients:</strong> {recipe.ingredients}</p>
+          <p className="card-text"><strong>Directions:</strong> {recipe.directions}</p>
+          <p className="card-text"><strong>Category ID:</strong> {recipe.category_id}</p>
+        </div>
+      </div>
     </div>
+  </div>
     
     {/* Edit Form */}
     <div>
