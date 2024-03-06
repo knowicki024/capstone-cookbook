@@ -1,8 +1,8 @@
-# Recipe Social Media Application 
+# Capstone Cookbook Application 
 ## Katie Nowicki
 
 
-Your own digital cookbook! Keep all your recipes in one location instead of scrolling through endless apps to find something to cook up. Share your recipes with friends, create your own recipes, change different recipes to make them more personalized, search through your collection to be able to plan the week or a special event. 
+Your own digital cookbook! Keep all your recipes in one location instead of scrolling through endless apps to find something to cook up. Create your own recipes, change different recipes to make them more personalized, search through your collection to be able to plan the week or a special event. 
 
 ![domain model](<capstone images - Imgur (4).png>)
 
@@ -13,17 +13,19 @@ Your own digital cookbook! Keep all your recipes in one location instead of scro
 ## Setup and Install to Deploy:
 
 
-To run the application, run the following commands in your terminal from the main directory:
+To run the application, create a split terminal. In the first terminal run:
 ```
 cd server
 pipenv install 
 pipenv shell 
 python seed.py
-cd ..
+python app.py
+```
+In the second terminal, run:
+```
 cd client
 npm install
-cd ..
-honcho start -f Procfile.dev
+npm start
 ```
 
 ## MVP 
