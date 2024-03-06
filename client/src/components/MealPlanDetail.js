@@ -20,7 +20,7 @@ function MealPlanDetail({ refreshMealPlans }) {
           .then(data => {
               setFormData(prevFormData => ({
                   ...prevFormData,
-                  recipe_name: data.name
+                  recipe_name: data.name || ''
               }));
           })
           .catch(error => console.error('Error fetching recipe:', error));
