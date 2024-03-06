@@ -10,7 +10,7 @@ function MainPage({ recipes, mealPlans}) {
         
         <div className="my-4"></div> 
 
-        <h2 className="mt-2 mb-4 large-header">Meal Plans</h2> 
+        <h2 className="mt-2 mb-4 large-header">Weekly Meal Plans</h2> 
         <MealPlanCards mealPlans={mealPlans} />
       </div>
     );

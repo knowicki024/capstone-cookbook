@@ -45,5 +45,25 @@ body {
   padding-top: 25px;
   box-shadow: #9CAB86;
 }
+.emoji-button {
+  border: none;
+  background: none;
+  padding: 0 0.25rem;
+  cursor: pointer;
+}
+
+.emoji-button.favorite {
+  position: absolute;
+  top: 10px; 
+  left: 10px; 
+  color: transparent;
+  text-shadow: 0 0 0 gray;
+}
+
+.emoji-button.favorite.active,
+.emoji-button.favorite:hover {
+  text-shadow: 0 0 0 gold;
+  cursor: pointer;
+}
 
 

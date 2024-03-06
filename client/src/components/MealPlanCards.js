@@ -30,6 +30,7 @@ function MealPlanCards({ mealPlans }) {
                 {mealPlansWithRecipeName.map((mealPlan, index) => (
                     <Col key={index}>
                         <Card className="h-100">
+
                             <Card.Body>
                                 <Card.Title>Date: {mealPlan.date}</Card.Title>
                                 <Card.Text>User ID: {mealPlan.user_id}</Card.Text>

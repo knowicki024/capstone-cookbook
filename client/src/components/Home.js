@@ -53,9 +53,11 @@ const refreshMealPlans = () => {
   .then(data => setMealPlans(data))
 }
 const searchRecipes = recipes.filter(recipe => {
-  return recipe.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-         recipe.category.name.toLowerCase().includes(searchTerm.toLowerCase());
+  const recipeNameMatches = recipe.name.toLowerCase().includes(searchTerm.toLowerCase());
+  const categoryNameMatches = recipe.category && recipe.category.name ? recipe.category.name.toLowerCase().includes(searchTerm.toLowerCase()) : false;
+  return recipeNameMatches || categoryNameMatches;
 });
+
 const handleSearch = (e) => {
   setSearchTerm(e.target.value)
 }
